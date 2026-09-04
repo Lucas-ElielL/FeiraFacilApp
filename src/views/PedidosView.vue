@@ -29,7 +29,10 @@
     }
     return(qtndItensTotais);
   }
-
+  let filtro = '';
+  function filtrar(filtro) {
+    console.log(filtro)
+  }
 </script>
 
 <template>
@@ -81,10 +84,11 @@
             name="filtro"
             type="search"
             placeholder="Digite o cliente ou código"
+            v-model="filtro"
           />
         </div>
 
-        <button class="button button-primary" type="button">
+        <button class="button button-primary" type="button" @click="filtrar(filtro)">
           Filtrar
         </button>
       </div>
