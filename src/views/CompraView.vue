@@ -1,6 +1,22 @@
 <script setup>
-  // import { pedidos } from '@/data/pedidos'
+  import { pedidos } from '@/data/pedidos'
   // O aluno deverá implementar a lógica do componente.
+  const nomeCliente = '';
+  let nomeProduto = '';
+  let idProduto = 0;
+  let precoUnitario = 0;
+  let quantidade = 0;
+   let produto = {
+    id: 0,
+    produto: '',
+    precoUnitario: 0,
+    quantidade: 0
+  };
+    function adicionarProduto() {
+      produto.push({id: idProduto, produto: nomeProduto, precoUnitario: precoUnitario, quantidade: quantidade});
+      idProduto += 1;
+      console.log(produto)
+    }
 </script>
 
 <template>
@@ -26,6 +42,7 @@
             name="codigoPedido"
             type="text"
             placeholder="Ex.: PED-001"
+
           />
         </div>
 
@@ -39,10 +56,16 @@
             name="nomeCliente"
             type="text"
             placeholder="Digite o nome do cliente"
+            v-model="nomeCliente.value"
           />
         </div>
       </div>
-
+      <div v-if="nomeCliente == ''">
+        <p>Insira um nome</p>
+      </div>
+      <div v-else>
+        <p></p>
+      </div>
       <!-- O aluno deverá implementar as mensagens de validação. -->
 
       <!-- Exiba aqui uma mensagem quando os dados forem inválidos. -->
@@ -62,6 +85,7 @@
             name="nomeProduto"
             type="text"
             placeholder="Ex.: Tomate"
+            v-model="nomeProduto"
           />
         </div>
 
@@ -77,6 +101,7 @@
             min="0"
             step="0.01"
             placeholder="0,00"
+            v-model="precoUnitario"
           />
         </div>
 
@@ -92,12 +117,13 @@
             min="1"
             step="1"
             placeholder="0"
+            v-model="quantidade"
           />
         </div>
       </div>
 
       <div class="form-actions">
-        <button class="button button-primary" type="button">
+        <button class="button button-primary" type="button" @click="adicionarProduto()">
           Adicionar produto
         </button>
       </div>

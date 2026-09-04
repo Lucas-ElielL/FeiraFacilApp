@@ -1,6 +1,35 @@
 <script setup>
   // O aluno deverá implementar a lógica do componente.
-  // import { pedidos } from '@/data/pedidos'
+  import { pedidos } from '@/data/pedidos'
+  function qtndItens(pedido) {
+    let itensTotaisPedido = 0;
+    for (let i = 0; i < pedido.length; i++) {
+    itensTotaisPedido += pedido[i].quantidade;
+    }
+    return(itensTotaisPedido)
+  };
+  function precoPedido(pedido) {
+    let precoTotal = 0;
+    for (let i = 0; i < pedido.length; i++) {
+    precoTotal += pedido[i].quantidade * pedido[i].precoUnitario;
+    }
+    return(precoTotal)
+  };
+  function precoTotal(pedido) {
+    let precoTotalPedido = 0;
+    for (const preco of pedido) {
+      precoTotalPedido += precoPedido(preco.itens);
+    }
+    return(precoTotalPedido)
+  }
+  function itensTotais(pedido) {
+    let qtndItensTotais = 0;
+    for (const item of pedido) {
+      qtndItensTotais += qtndItens(item.itens);
+    }
+    return(qtndItensTotais);
+  }
+
 </script>
 
 <template>
@@ -20,21 +49,21 @@
         <span>Pedidos realizados</span>
 
         <!-- O aluno deverá calcular este valor. -->
-        <strong>0</strong>
+        <strong>{{ pedidos.length }}</strong>
       </article>
 
       <article class="summary-card">
         <span>Itens vendidos</span>
 
         <!-- O aluno deverá calcular este valor. -->
-        <strong>0</strong>
+        <strong>{{ itensTotais(pedidos) }}</strong>
       </article>
 
       <article class="summary-card">
         <span>Total vendido</span>
 
         <!-- O aluno deverá calcular este valor. -->
-        <strong>R$ 0,00</strong>
+        <strong>R${{ precoTotal(pedidos) }}</strong>
       </article>
     </section>
 
@@ -83,16 +112,22 @@
           </thead>
 
           <tbody>
+
+            <ul>
+              <li v-for="pedido in pedidos" :key="pedido.codigo">
+                <tr>
+                  <td>{{ pedido.codigo }}</td>
+                  <td>{{ pedido.cliente }}</td>
+                  <td>{{ pedido.itens.length }}</td>
+                  <td>{{ qtndItens(pedido.itens) }}</td>
+                  <td>R$ {{ precoPedido(pedido.itens).toFixed(2) }}</td>
+                </tr>
+              </li>
+            </ul>
            <!--
               Exemplo da estrutura que deverá ser repetida pelo aluno:
 
-              <tr>
-                <td>Código do pedido</td>
-                <td>Nome do cliente</td>
-                <td>Quantidade de produtos diferentes</td>
-                <td>Quantidade total de itens</td>
-                <td>Valor total do pedido</td>
-              </tr>
+
             -->
           </tbody>
         </table>
